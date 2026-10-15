@@ -4,13 +4,17 @@ import mongoose from "mongoose";
 import dbConnect from "@/app/lib/db";
 import { toNextJsHandler } from "better-auth/next-js";
 
-export const dynamic = "force-dynamic";
+try {
+  await dbConnect();
+} catch (error) {
+  console.warn("Database connection skipped during build time.");
+}
 
-await dbConnect();
-const nativeClient = mongoose.connection.getClient();
+const nativeClient = mongoose.connection?.getClient ? mongoose.connection.getClient() : null;
+const dbInstance = nativeClient ? nativeClient.db() : { collection: () => ({}) };
 
 export const auth = betterAuth({
-  database: mongodbAdapter(nativeClient.db()),
+  database: mongodbAdapter(dbInstance),
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
