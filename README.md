@@ -35,8 +35,8 @@ Note: Configure the required environment variables before running authentication
 
 🌐 Links
 
-* Live Demo: YOUR_DEPLOYED_URL
-* GitHub Repository: YOUR_REPOSITORY_URL
+* Live Demo: https://frabjous-douhua-6ae0c3.netlify.app/
+* GitHub Repository: https://github.com/mdmalekmiah1704-dev/BazarDor
 
 ⸻
 
