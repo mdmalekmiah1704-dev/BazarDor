@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/bazardor";
-
+const MONGODB_URI = "mongodb+srv://bazardoruser:bazardorpass123@cluster0.ngpzp.mongodb.net/bazardor?retryWrites=true&w=majority";
 if (!MONGODB_URI) {
   throw new Error("অনুগ্রহ করে .env ফাইলে MONGODB_URI যুক্ত করুন");
 }
