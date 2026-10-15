@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI environment variable is missing");
+if (!MONGODB_URI && process.env.NODE_ENV === "production" && typeof window === "undefined") {
+  console.warn("Warning: MONGODB_URI is missing during build time.");
 }
 
 let cached = global.mongoose;
@@ -16,6 +16,10 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  if (!MONGODB_URI) {
+    return null;
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
