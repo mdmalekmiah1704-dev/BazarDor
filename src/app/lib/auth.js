@@ -3,6 +3,8 @@ import { mongooseAdapter } from "better-auth/adapters/mongoose";
 import mongoose from "mongoose";
 import dbConnect from "@/app/lib/db";
 
+await dbConnect();
+
 export const auth = betterAuth({
   database: mongooseAdapter(mongoose),
 

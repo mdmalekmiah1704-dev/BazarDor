@@ -4,8 +4,8 @@ import mongoose from "mongoose";
 import dbConnect from "@/app/lib/db";
 import { toNextJsHandler } from "better-auth/next-js";
 
-const mongooseInstance = await dbConnect();
-const nativeClient = mongooseInstance.connection.getClient();
+await dbConnect();
+const nativeClient = mongoose.connection.getClient();
 
 export const auth = betterAuth({
   database: mongodbAdapter(nativeClient.db()),
