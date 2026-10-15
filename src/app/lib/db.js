@@ -1,39 +1,40 @@
-import mongoose from "mongoose";
+import mongoose from “mongoose”;
 
-const MONGODB_URI = "mongodb+srv://bazardoruser:bazardorpass123@cluster0.ngpzp.mongodb.net/bazardor?retryWrites=true&w=majority";
+const MONGODB_URI = process.env.MONGODB_URI;
+
 if (!MONGODB_URI) {
-  throw new Error("অনুগ্রহ করে .env ফাইলে MONGODB_URI যুক্ত করুন");
+throw new Error(“MONGODB_URI environment variable is missing”);
 }
 
 let cached = global.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+cached = global.mongoose = {
+conn: null,
+promise: null,
+};
 }
 
 async function dbConnect() {
-  if (cached.conn) {
-    return cached.conn;
-  }
+if (cached.conn) {
+return cached.conn;
+}
 
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    };
+if (!cached.promise) {
+cached.promise = mongoose
+.connect(MONGODB_URI, {
+bufferCommands: false,
+})
+.then((mongooseInstance) => mongooseInstance)
+.catch((error) => {
+cached.promise = null;
+throw error;
+});
+}
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
-      return mongooseInstance;
-    });
-  }
-  
-  try {
-    cached.conn = await cached.promise;
-  } catch (e) {
-    cached.promise = null;
-    throw e;
-  }
+cached.conn = await cached.promise;
 
-  return cached.conn;
+return cached.conn;
 }
 
 export default dbConnect;
