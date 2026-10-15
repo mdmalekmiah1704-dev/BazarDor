@@ -7,10 +7,9 @@ import { toNextJsHandler } from "better-auth/next-js";
 await dbConnect();
 
 const nativeClient = mongoose.connection?.getClient ? mongoose.connection.getClient() : null;
-const databaseConfig = nativeClient ? mongodbAdapter(nativeClient.db()) : undefined;
 
 export const auth = betterAuth({
-  database: databaseConfig,
+  database: nativeClient ? mongodbAdapter(nativeClient.db()) : undefined,
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
