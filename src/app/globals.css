@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --brand-gradient: linear-gradient(
+    135deg,
+    #16a34a,
+    #84cc16
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #171717;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #84cc16;
+  color: white;
+}
