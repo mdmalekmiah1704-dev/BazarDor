@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import dbConnect from "@/app/lib/db";
 import { toNextJsHandler } from "better-auth/next-js";
 
+export const dynamic = "force-dynamic";
+
 await dbConnect();
 const nativeClient = mongoose.connection.getClient();
 
